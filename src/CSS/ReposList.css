@@ -1,0 +1,64 @@
+.repos-container {
+  margin-left: 80px;
+  padding-right: 50px;
+}
+
+.repos-list h2 {
+  margin-top: 5px;
+  color: #f5f5f5;
+  margin-bottom: 30px;
+  padding-right: 20px;
+}
+
+.repos-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.repos-list li {
+  text-align: left;
+}
+
+/* Estilo para la sección de paginación */
+.pagination-repos {
+  display: flex;
+  margin-left: -5px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Estilo para los botones de paginación */
+.pagination-repos button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+
+  padding: 10px 20px; /* Espaciado interno */
+  margin: 0 5px; /* Espacio entre los botones */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+/* Estilo para el botón activo de la página actual */
+.pagination-repos button.active {
+  background-color: #0056b3; /* Cambio de color de fondo para el botón activo */
+}
+
+/* Estilo para el botón de página al pasar el cursor */
+.pagination-repos button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 420px) {
+  .repos-container {
+    padding-left: 30px;
+    margin-left: 10px;
+  }
+
+  .repos-list h2 {
+    padding-right: 0px;
+  }
+}
