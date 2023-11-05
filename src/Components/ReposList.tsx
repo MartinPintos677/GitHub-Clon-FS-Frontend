@@ -1,10 +1,10 @@
-import { useState } from 'react'
-import Header from '../Components/Header'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
+import { format } from 'date-fns'
+import Header from '../Components/Header'
 import RepoModal from './RepoModal'
 import axios from 'axios'
-import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import '../Css/UsersList.css'
 import '../Css/ReposList.css'
@@ -12,10 +12,12 @@ import '../Css/InputSearch.css'
 import { useAuth } from '../Auth/AuthContext'
 
 type GitHubRepository = {
-  language: string
   name: string
+  user: string
   description: string
-  html_url: string
+  language: string
+  url: string
+  created_at: string
   pushed_at: string
 }
 
@@ -28,29 +30,68 @@ const GitHubRepos = () => {
   const [selectedRepo, setSelectedRepo] = useState<GitHubRepository | null>(
     null
   )
+  const [headerMessage, setHeaderMessage] = useState('Buscador de repositorios')
+
   const repositoriesPerPage = 10
   const navigate = useNavigate()
   const { state } = useAuth()
 
-  const handleSearch = async () => {
+  useEffect(() => {
+    if (hasSearched) {
+      // Verificar la longitud de repositories y establecer headerMessage aquí
+      if (repositories.length === 1) {
+        setHeaderMessage('Resultados de la búsqueda: (1 repositorio)')
+      } else if (repositories.length > 1) {
+        setHeaderMessage(
+          `Resultados de la búsqueda: (${repositories.length} repositorios)`
+        )
+      } else {
+        setHeaderMessage('Ningún repositorio con el nombre indicado.')
+      }
+    } else {
+      setHeaderMessage('Buscador de repositorios')
+    }
+  }, [hasSearched, repositories])
+
+  const fetchRepositories = async () => {
     try {
-      const response = await axios.get(
-        `https://api.github.com/search/repositories?q=${searchQuery}&per_page=100`
+      console.log('searchQuery before HTTP request:', searchQuery)
+      const response = await axios.post(
+        'http://localhost:3000/searchrepos',
+        { searchTerm: searchQuery },
+        {
+          headers: {
+            Authorization: `${state.token}`
+          }
+        }
       )
+      console.log('GitHub API response:', response.data)
 
-      setRepositories([])
+      // Verifica si 'response.data.reposlist' contiene los datos de los repositorios.
+      const repositoriesData = response.data.reposlist || []
 
-      setRepositories(response.data.items)
+      // Actualiza 'currentRepositories' con los datos de los repositorios.
+      setRepositories(repositoriesData)
+
       setCurrentPage(1)
       setHasSearched(true)
     } catch (error) {
-      console.error('Error fetching GitHub repositories:', error)
+      console.error('Error fetching repositories:', error)
+    }
+  }
+
+  const handleSearch = () => {
+    // Realizar una búsqueda solo si se ha proporcionado un término de búsqueda
+    if (searchQuery.trim() !== '') {
+      // Mostrar un indicador de carga
+      setRepositories([]) // Reiniciar los resultados
+      fetchRepositories()
     }
   }
 
   const handleClearSearch = () => {
-    setSearchQuery('') // Limpia el campo de búsqueda
-    setRepositories([]) // Limpia la lista de repositorios encontrados
+    setSearchQuery('')
+    setRepositories([])
     setHasSearched(false)
   }
 
@@ -59,46 +100,30 @@ const GitHubRepos = () => {
   }
 
   const handleGoToHome = () => {
-    // Redirige a la ruta '/user/${state.username}'
     navigate(`/user/${state.username}`)
   }
 
-  // Función para abrir el modal
   const handleOpenModal = (repo: GitHubRepository) => {
     setSelectedRepo(repo)
     setIsModalOpen(true)
   }
 
-  // Función para cerrar el modal
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setSelectedRepo(null)
   }
 
-  // Calcular el índice inicial y final de los repositorios a mostrar en la página actual
   const indexOfLastRepository = currentPage * repositoriesPerPage
   const indexOfFirstRepository = indexOfLastRepository - repositoriesPerPage
+
   const currentRepositories = repositories.slice(
     indexOfFirstRepository,
     indexOfLastRepository
   )
 
-  // Calcular el número total de páginas
   const totalPages = Math.ceil(repositories.length / repositoriesPerPage)
 
-  // Determina el mensaje del encabezado en función del número de repositorios encontrados
-  let headerMessage = ''
-  if (hasSearched) {
-    if (repositories.length === 1) {
-      headerMessage = 'Resultados de la búsqueda: (1 repositorio)'
-    } else if (repositories.length > 1) {
-      headerMessage = `Resultados de la búsqueda: (${repositories.length} repositorios)`
-    } else {
-      headerMessage = 'Ningún repositorio con el nombre indicado.'
-    }
-  } else {
-    headerMessage = 'Buscador de repositorios'
-  }
+  console.log('Repositories data:', currentRepositories)
 
   return (
     <div>
@@ -154,36 +179,41 @@ const GitHubRepos = () => {
         <div className="repos-container">
           <div className="repos-list">
             <h2>{headerMessage}</h2>
-            <ul>
-              {currentRepositories.map((repository, index) => (
-                <li key={index} className="user-repos-list">
-                  <div
-                    className="repo-name"
-                    onClick={() => handleOpenModal(repository)}
-                  >
-                    {repository.name}
-                  </div>
-                  {repository.description && (
-                    <div className="repo-description">
-                      {repository.description}
-                    </div>
-                  )}
-                  <div className="repo-details">
-                    {repository.language && <div>{repository.language}</div>}
-                    <div>
-                      Última actualización:{' '}
-                      {format(
-                        new Date(repository.pushed_at),
-                        'dd/MM/yyyy HH:mm'
+            {hasSearched ? (
+              currentRepositories.length > 0 ? (
+                <ul>
+                  {currentRepositories.map((repository, index) => (
+                    <li key={index} className="user-repos-list">
+                      <div
+                        className="repo-name"
+                        onClick={() => handleOpenModal(repository)}
+                      >
+                        {repository.name}
+                      </div>
+                      {repository.description && (
+                        <div className="repo-description">
+                          {repository.description}
+                        </div>
                       )}
-                    </div>
-                  </div>
-                  <hr className="mt-4 text-light" />
-                </li>
-              ))}
-            </ul>
+                      <div className="repo-details">
+                        {repository.language && (
+                          <div>{repository.language}</div>
+                        )}
+                        <div>
+                          Última actualización:{' '}
+                          {format(
+                            new Date(repository.pushed_at),
+                            'dd/MM/yyyy HH:mm'
+                          )}
+                        </div>
+                      </div>
+                      <hr className="mt-4 text-light" />
+                    </li>
+                  ))}
+                </ul>
+              ) : null
+            ) : null}
           </div>
-          {/* Agrega la paginación aquí, similar a la versión anterior */}
           <div className="pagination-repos mb-3 mt-4">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -196,7 +226,6 @@ const GitHubRepos = () => {
             ))}
           </div>
         </div>
-        {/* Renderiza el modal */}
         {isModalOpen && selectedRepo && (
           <RepoModal repo={selectedRepo} onClose={handleCloseModal} />
         )}

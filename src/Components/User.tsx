@@ -27,9 +27,7 @@ const User: React.FC = () => {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        console.log(`Token antes de la solicitud: ${state.token}`)
-
-        console.log('Antes de configurar las cabeceras')
+        //console.log(`${state.token}`)
 
         const response = await axios.get(
           `http://localhost:3000/user/user/${state.username}`,
@@ -37,11 +35,10 @@ const User: React.FC = () => {
             headers: {
               Authorization: `${state.token}`
             }
-            //withCredentials: true
           }
         )
 
-        console.log('Después de la solicitud')
+        //console.log('Después de la solicitud')
         setUserData(response.data)
       } catch (error) {
         console.error('Error de red:', error)
