@@ -11,7 +11,7 @@ import '../Css/ReposList.css'
 import '../Css/InputSearch.css'
 import { useAuth } from '../Auth/AuthContext'
 
-type GitHubRepository = {
+export type GitHubRepository = {
   name: string
   user: string
   description: string
@@ -104,7 +104,9 @@ const GitHubRepos = () => {
   }
 
   const handleOpenModal = (repo: GitHubRepository) => {
+    console.log('handleOpenModal called')
     setSelectedRepo(repo)
+    console.log('Selected Repo:', selectedRepo)
     setIsModalOpen(true)
   }
 
