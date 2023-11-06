@@ -21,7 +21,7 @@ const UserStateRepoModal: React.FC<RepoModalProps> = ({ onClose }) => {
         <div className="line-modal"></div>
         <p>Usuario: {state.username}</p>
         <p>Descripción: Mi primer proyecto en GitHub</p>
-        <p>Tecnologías: Typescript, CSS, HTML</p>
+        <p>Tecnología: Typescript</p>
         <p>Fecha de creación: 10/08/2023 12:00</p>
         <p>Última actualización: 20/09/2023 16:00</p>
         <p>URL: https://github.com/{state.username}/Repo-Full-Stack</p>
