@@ -31,7 +31,7 @@ const GitHubRepos = () => {
     null
   )
   const [headerMessage, setHeaderMessage] = useState('Buscador de repositorios')
-
+  const [isLoading, setIsLoading] = useState(false)
   const repositoriesPerPage = 10
   const navigate = useNavigate()
   const { state } = useAuth()
@@ -54,29 +54,35 @@ const GitHubRepos = () => {
   }, [hasSearched, repositories])
 
   const fetchRepositories = async () => {
-    try {
-      console.log('searchQuery before HTTP request:', searchQuery)
-      const response = await axios.post(
-        'http://localhost:3000/searchrepos',
-        { searchTerm: searchQuery },
-        {
-          headers: {
-            Authorization: `${state.token}`
+    if (searchQuery.trim() !== '') {
+      setIsLoading(true) // Iniciar la carga
+
+      try {
+        //console.log('searchQuery before HTTP request:', searchQuery)
+        const response = await axios.post(
+          'http://localhost:3000/searchrepos',
+          { searchTerm: searchQuery },
+          {
+            headers: {
+              Authorization: `${state.token}`
+            }
           }
-        }
-      )
-      console.log('GitHub API response:', response.data)
+        )
+        console.log('GitHub API response:', response.data)
 
-      // Verifica si 'response.data.reposlist' contiene los datos de los repositorios.
-      const repositoriesData = response.data.reposlist || []
+        // Verifica si 'response.data.reposlist' contiene los datos de los repositorios.
+        const repositoriesData = response.data.reposlist || []
 
-      // Actualiza 'currentRepositories' con los datos de los repositorios.
-      setRepositories(repositoriesData)
+        // Actualiza 'currentRepositories' con los datos de los repositorios.
+        setRepositories(repositoriesData)
 
-      setCurrentPage(1)
-      setHasSearched(true)
-    } catch (error) {
-      console.error('Error fetching repositories:', error)
+        setCurrentPage(1)
+        setHasSearched(true)
+      } catch (error) {
+        console.error('Error fetching repositories:', error)
+      } finally {
+        setIsLoading(false) // Detener la carga después de la búsqueda
+      }
     }
   }
 
@@ -180,8 +186,10 @@ const GitHubRepos = () => {
 
         <div className="repos-container">
           <div className="repos-list">
-            <h2>{headerMessage}</h2>
-            {hasSearched ? (
+            <h2>{hasSearched ? headerMessage : 'Buscador de repositorios'}</h2>
+            {isLoading ? (
+              <p className="loading-repos">Cargando repositorios...</p>
+            ) : hasSearched ? (
               currentRepositories.length > 0 ? (
                 <ul>
                   {currentRepositories.map((repository, index) => (
