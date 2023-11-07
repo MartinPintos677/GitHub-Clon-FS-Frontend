@@ -4,6 +4,7 @@ import UserHome from './Pages/Home'
 import UserList from './Pages/PageUsersList'
 import SelectedUser from './Pages/PageSelectedUser'
 import ReposList from './Pages/PageReposList'
+import ReposListBD from './Components/ReposListBD'
 import { useAuth } from './Auth/AuthContext'
 import './App.css'
 
@@ -64,6 +65,16 @@ function App() {
         element={
           state.isLoggedIn && !isTokenExpired() ? (
             <ReposList />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
+      <Route
+        path="/user/:username/reposlistbd"
+        element={
+          state.isLoggedIn && !isTokenExpired() ? (
+            <ReposListBD />
           ) : (
             <Navigate to="/" />
           )

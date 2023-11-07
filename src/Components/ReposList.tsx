@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
+import { faHouseUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'date-fns'
 import Header from '../Components/Header'
 import RepoModal from './RepoModal'
@@ -109,6 +109,10 @@ const GitHubRepos = () => {
     navigate(`/user/${state.username}`)
   }
 
+  const handleGoToAuth = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
+  }
+
   const handleOpenModal = (repo: GitHubRepository) => {
     console.log('handleOpenModal called')
     setSelectedRepo(repo)
@@ -179,6 +183,9 @@ const GitHubRepos = () => {
               <br />
               <button className="btn-back" onClick={handleGoToHome}>
                 <FontAwesomeIcon icon={faHouseUser} className="" />
+              </button>
+              <button className="btn-back ms-4" onClick={handleGoToAuth}>
+                <FontAwesomeIcon icon={faLock} className="" />
               </button>
             </div>
           </div>
