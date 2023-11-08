@@ -143,7 +143,7 @@ const RepositoryDetails: React.FC = () => {
                   <p className="mt-3">Nombre: {repo.name}</p>
                   <p>Usuario: {repo.user}</p>
                   <p>Descripción: {repo.description}</p>
-                  <p>Lenguaje: {repo.language}</p>
+                  <p>Tecnología: {repo.language}</p>
                   <p>
                     Fecha de creación:{' '}
                     {repo.created_at
@@ -157,7 +157,6 @@ const RepositoryDetails: React.FC = () => {
                       : 'Fecha no disponible'}
                   </p>
                   <p className="mb-4">URL: {repo.url}</p>
-                  {/*<div className="line-h2 mb-4"></div>*/}
                   <hr className="mt-4 text-light" />
                 </div>
               ))}
