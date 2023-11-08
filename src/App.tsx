@@ -5,76 +5,54 @@ import UserList from './Pages/PageUsersList'
 import SelectedUser from './Pages/PageSelectedUser'
 import ReposList from './Pages/PageReposList'
 import ReposListBD from './Components/ReposListBD'
+import SelectedRepoBD from './Components/RepositoryDetails'
 import { useAuth } from './Auth/AuthContext'
 import './App.css'
 
 function App() {
   const { state } = useAuth()
 
-  const isTokenExpired = () => {
-    const tokenCreationTime = localStorage.getItem('tokenCreationTime')
-    if (tokenCreationTime) {
-      const currentTime = new Date().getTime()
-      const timeElapsed = (currentTime - parseInt(tokenCreationTime)) / 1000 // Convertir a segundos
-      return timeElapsed >= 3600 // 3600 segundos = 1 hora
-    }
-    return false // No hay tiempo de creación de token en localStorage
-  }
-
   return (
     <Routes>
       <Route
         path="/"
-        element={
-          !state.isLoggedIn || isTokenExpired() ? <Default /> : <UserHome />
-        }
+        element={!state.isLoggedIn ? <Default /> : <UserHome />}
       />
 
       <Route
         path="/user/:username"
-        element={
-          state.isLoggedIn && !isTokenExpired() ? (
-            <UserHome />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={state.isLoggedIn ? <UserHome /> : <Navigate to="/" />}
       />
       <Route
         path="/user/:username/userslist"
-        element={
-          state.isLoggedIn && !isTokenExpired() ? (
-            <UserList />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={state.isLoggedIn ? <UserList /> : <Navigate to="/" />}
       />
       <Route
         path="/user/:username/userslist/:id"
-        element={
-          state.isLoggedIn && !isTokenExpired() ? (
-            <SelectedUser />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={state.isLoggedIn ? <SelectedUser /> : <Navigate to="/" />}
       />
       <Route
         path="/user/:username/reposlist"
-        element={
-          state.isLoggedIn && !isTokenExpired() ? (
-            <ReposList />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={state.isLoggedIn ? <ReposList /> : <Navigate to="/" />}
       />
       <Route
         path="/user/:username/reposlistbd"
+        element={state.isLoggedIn ? <ReposListBD /> : <Navigate to="/" />}
+      />
+      <Route
+        path="/user/:username/reposlistbd/:id"
         element={
-          state.isLoggedIn && !isTokenExpired() ? (
-            <ReposListBD />
+          state.isLoggedIn ? (
+            <SelectedRepoBD
+              name={''}
+              user={''}
+              description={''}
+              language={''}
+              comment={''}
+              url={''}
+              created_at={''}
+              pushed_at={''}
+            />
           ) : (
             <Navigate to="/" />
           )

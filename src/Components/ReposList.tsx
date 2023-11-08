@@ -135,7 +135,7 @@ const GitHubRepos = () => {
 
   const totalPages = Math.ceil(repositories.length / repositoriesPerPage)
 
-  console.log('Repositories data:', currentRepositories)
+  //console.log('Repositories data:', currentRepositories)
 
   return (
     <div>

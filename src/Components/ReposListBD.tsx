@@ -74,6 +74,10 @@ const RepositoryList: React.FC = () => {
           <div className="search-panels">
             <div className="btn-container-bd">
               <button className="btn-clear" onClick={handleGoToUsers}>
+                Usuarios buscados
+              </button>
+              <br />
+              <button className="btn-clear" onClick={handleGoToUsers}>
                 Buscar usuarios
               </button>
               <br />
@@ -95,7 +99,7 @@ const RepositoryList: React.FC = () => {
             {searches.map(search => (
               <li key={search._id}>
                 <Link
-                  to={`/repository-details/${search._id}`}
+                  to={`/user/${state.username}/reposlistbd/${search._id}`}
                   className="repos-list-bd-a"
                 >
                   {search.search}
