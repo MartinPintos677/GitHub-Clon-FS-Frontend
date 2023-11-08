@@ -16,7 +16,6 @@ const Header = () => {
         headers: {
           Authorization: `${state.token}`
         }
-        //withCredentials: true // Asegúrate de incluir withCredentials para enviar las cookies
       })
 
       // Despacha la acción de cierre de sesión
@@ -28,6 +27,16 @@ const Header = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(prevState => !prevState)
+  }
+
+  const isTokenExpired = () => {
+    const tokenCreationTime = localStorage.getItem('tokenCreationTime')
+    if (tokenCreationTime) {
+      const currentTime = new Date().getTime()
+      const timeElapsed = (currentTime - parseInt(tokenCreationTime)) / 1000 // Convertir a segundos
+      return timeElapsed >= 3600 // 3600 segundos = 1 hora
+    }
+    return false // No hay tiempo de creación de token en localStorage
   }
 
   return (
@@ -52,7 +61,7 @@ const Header = () => {
         </div>
         <div>
           <div className="custom-dropdown-two">
-            {state.isLoggedIn ? (
+            {state.isLoggedIn && !isTokenExpired() ? (
               <div></div>
             ) : (
               <p className="username-message-three">Bienvenidos a GitHub</p>

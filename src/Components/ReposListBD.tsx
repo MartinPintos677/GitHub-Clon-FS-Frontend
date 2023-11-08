@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan, faHouseUser } from '@fortawesome/free-solid-svg-icons'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Header from '../Components/Header'
 import { useAuth } from '../Auth/AuthContext'
+import '../Css/ReposListBD.css'
+
+// Agregar BTN de Usuarios Buscados
 
 interface SearchRepository {
   _id: string
@@ -11,6 +17,7 @@ interface SearchRepository {
 const RepositoryList: React.FC = () => {
   const [searches, setSearches] = useState<SearchRepository[]>([])
   const { state } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchSearches = async () => {
@@ -47,21 +54,63 @@ const RepositoryList: React.FC = () => {
     }
   }
 
+  const handleGoToUsers = () => {
+    navigate(`/user/${state.username}/userslist`)
+  }
+
+  const handleGoToHome = () => {
+    navigate(`/user/${state.username}`)
+  }
+
+  const handleGoToRepos = () => {
+    navigate(`/user/${state.username}/reposlist`)
+  }
+
   return (
     <div>
-      <h1 className="text-light">Lista de Repositorios Buscados</h1>
-      <ul className="text-light">
-        {searches.map(search => (
-          <li key={search._id}>
-            <Link to={`/repository-details/${search._id}`}>
-              {search.search}
-            </Link>
-            <button onClick={() => handleDeleteSearch(search._id)}>
-              Eliminar
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Header />
+      <div className="repos-list-bd-container">
+        <div className="input-container">
+          <div className="search-panels">
+            <div className="btn-container-bd">
+              <button className="btn-clear" onClick={handleGoToUsers}>
+                Buscar usuarios
+              </button>
+              <br />
+              <button className="btn-clear" onClick={handleGoToRepos}>
+                Buscar repositorios
+              </button>
+              <br />
+              <button className="btn-back" onClick={handleGoToHome}>
+                <FontAwesomeIcon icon={faHouseUser} className="" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="repos-list-bd">
+          <h1 className="fs-3">Lista de Repositorios Buscados</h1>
+          <div className="line-h2"></div>
+          <ul className="">
+            {searches.map(search => (
+              <li key={search._id}>
+                <Link
+                  to={`/repository-details/${search._id}`}
+                  className="repos-list-bd-a"
+                >
+                  {search.search}
+                </Link>
+                <button
+                  className="ms-4 btn-delete"
+                  onClick={() => handleDeleteSearch(search._id)}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} className="" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
