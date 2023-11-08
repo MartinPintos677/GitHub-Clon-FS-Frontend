@@ -98,10 +98,12 @@ const RepositoryDetails: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-light">Detalles del Repositorio Buscado</h1>
+      <h3 className="text-light">Detalles del Repositorio Buscado</h3>
       {repositoryData ? (
         <div className="text-light">
-          <h2>Nombre del repositorio: {repositoryData.search}</h2>
+          <h5 className="mb-3 mt-3">
+            Búsqueda realizada: {repositoryData.search}
+          </h5>
           <p>Usuario: {repositoryData.user.username}</p>
           <p>
             Fecha de creación:{' '}
@@ -155,7 +157,8 @@ const RepositoryDetails: React.FC = () => {
                       : 'Fecha no disponible'}
                   </p>
                   <p className="mb-4">URL: {repo.url}</p>
-                  <div className="line-h2 mb-4"></div>
+                  {/*<div className="line-h2 mb-4"></div>*/}
+                  <hr className="mt-4 text-light" />
                 </div>
               ))}
             </div>
