@@ -95,7 +95,7 @@ const RepositoryList: React.FC = () => {
         <div className="repos-list-bd">
           <h1 className="fs-3">Lista de Repositorios Buscados</h1>
           <div className="line-h2"></div>
-          <ul className="">
+          <ul className="list-repos-searched">
             {searches.map(search => (
               <li key={search._id}>
                 <Link

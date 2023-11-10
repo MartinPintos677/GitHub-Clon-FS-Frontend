@@ -1,5 +1,5 @@
 .repos-details-bd {
-  max-width: 600px;
+  max-width: 520px;
   /* margin: 0 auto;*/
   margin-left: 350px;
   padding: 30px;
@@ -44,6 +44,11 @@
   background-color: #0056b3;
   color: #f5f5f5;
   border: 1px solid #0056b3;
+}
+
+.btn-update-delete {
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn-show-details {

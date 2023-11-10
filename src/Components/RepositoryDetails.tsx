@@ -8,7 +8,8 @@ import {
   faPenToSquare,
   faArrowDown,
   faArrowUp,
-  faTrashCan
+  faTrashCan,
+  faCircleArrowLeft
 } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../Auth/AuthContext'
 import axios from 'axios'
@@ -118,6 +119,10 @@ const RepositoryDetails: React.FC = () => {
     navigate(`/user/${state.username}/reposlist`)
   }
 
+  const handleGoToBackUsers = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
+  }
+
   return (
     <div>
       <Header />
@@ -137,7 +142,10 @@ const RepositoryDetails: React.FC = () => {
                 Buscar repositorios
               </button>
               <br />
-              <button className="btn-back" onClick={handleGoToHome}>
+              <button className="btn-back" onClick={handleGoToBackUsers}>
+                <FontAwesomeIcon icon={faCircleArrowLeft} className="" />
+              </button>
+              <button className="btn-back ms-4" onClick={handleGoToHome}>
                 <FontAwesomeIcon icon={faHouseUser} className="" />
               </button>
             </div>
@@ -170,7 +178,10 @@ const RepositoryDetails: React.FC = () => {
                     )
                   : 'Fecha no disponible'}
               </p>
-              <p>Comentario: {repositoryData.comment}</p>
+              <p>Resultados encontrados: {repositoryData.reposlist.length}</p>
+              {repositoryData.comment && (
+                <p>Comentario: {repositoryData.comment}</p>
+              )}
               {/* Campo de entrada para el comentario */}
               <input
                 className="repo-details-input"
@@ -193,30 +204,32 @@ const RepositoryDetails: React.FC = () => {
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
               <br />
-              <button
-                className="btn-show-details"
-                onClick={() => setDetailsVisible(!detailsVisible)}
-              >
-                {detailsVisible ? (
-                  <>
-                    <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
-                  </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
-                  </>
-                )}
-              </button>
-              <button
-                className="ms-3 btn-delete-details"
-                onClick={handleDeleteRepository}
-              >
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  style={{ marginRight: '7px' }}
-                />
-                Eliminar búsqueda
-              </button>
+              <div className="btn-update-delete">
+                <button
+                  className="btn-show-details"
+                  onClick={() => setDetailsVisible(!detailsVisible)}
+                >
+                  {detailsVisible ? (
+                    <>
+                      <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
+                    </>
+                  )}
+                </button>
+                <button
+                  className="ms-3 btn-delete-details"
+                  onClick={handleDeleteRepository}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    style={{ marginRight: '7px' }}
+                  />
+                  Eliminar búsqueda
+                </button>
+              </div>
               {detailsVisible ? (
                 <div>
                   <h4 className="mt-3">Detalles adicionales:</h4>
@@ -236,13 +249,13 @@ const RepositoryDetails: React.FC = () => {
                             )
                           : 'Fecha no disponible'}
                       </p>
-                      <p>
+                      <p className="mb-4">
                         Última actualización:{' '}
                         {repo.pushed_at
                           ? format(new Date(repo.pushed_at), 'dd/MM/yyyy HH:mm')
                           : 'Fecha no disponible'}
                       </p>
-                      <p className="mb-4">URL: {repo.url}</p>
+
                       <hr className="mt-4 text-light" />
                     </div>
                   ))}

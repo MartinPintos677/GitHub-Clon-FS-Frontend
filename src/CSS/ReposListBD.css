@@ -74,6 +74,10 @@
   color: #007bff;
 }
 
+.list-repos-searched {
+  margin-bottom: 0;
+}
+
 .btn-delete {
   background: none;
   border: none;

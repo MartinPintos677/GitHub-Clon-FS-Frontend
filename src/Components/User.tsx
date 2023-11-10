@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../Components/Header'
 import { useAuth } from '../Auth/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { faUserGroup, faLock } from '@fortawesome/free-solid-svg-icons'
 import RepoModal from './UserStateModal'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -61,6 +61,10 @@ const User: React.FC = () => {
     navigate(`/user/${state.username}/reposlist`)
   }
 
+  const handleGoToAuth = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
+  }
+
   const handleRepoClick = () => {
     const repoData: Repo = {
       name: 'Repositorio para el curso de Full Stack',
@@ -113,6 +117,10 @@ const User: React.FC = () => {
             </button>
             <button className="btn-back" onClick={handleGoToRepositories}>
               Buscar repositorios
+            </button>
+            <br />
+            <button className="btn-back" onClick={handleGoToAuth}>
+              <FontAwesomeIcon icon={faLock} className="" />
             </button>
           </div>
         </div>
