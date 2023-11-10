@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { useParams, useNavigate } from 'react-router-dom'
+import Header from '../Components/Header'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faHouseUser,
+  faPenToSquare,
+  faArrowDown,
+  faArrowUp,
+  faTrashCan
+} from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../Auth/AuthContext'
 import axios from 'axios'
+import '../Css/RepoDetails.css'
 
 interface Repository {
   _id: string
@@ -96,76 +106,154 @@ const RepositoryDetails: React.FC = () => {
     }
   }
 
+  const handleGoToUsers = () => {
+    navigate(`/user/${state.username}/userslist`)
+  }
+
+  const handleGoToHome = () => {
+    navigate(`/user/${state.username}`)
+  }
+
+  const handleGoToRepos = () => {
+    navigate(`/user/${state.username}/reposlist`)
+  }
+
   return (
     <div>
-      <h3 className="text-light">Detalles del Repositorio Buscado</h3>
-      {repositoryData ? (
-        <div className="text-light">
-          <h5 className="mb-3 mt-3">
-            Búsqueda realizada: {repositoryData.search}
-          </h5>
-          <p>Usuario: {repositoryData.user.username}</p>
-          <p>
-            Fecha de creación:{' '}
-            {repositoryData.createdAt
-              ? format(new Date(repositoryData.createdAt), 'dd/MM/yyyy HH:mm')
-              : 'Fecha no disponible'}
-          </p>
-          <p>
-            Última actualización:{' '}
-            {repositoryData.updatedAt
-              ? format(new Date(repositoryData.updatedAt), 'dd/MM/yyyy HH:mm')
-              : 'Fecha no disponible'}
-          </p>
-          <p>Comentario: {repositoryData.comment}</p>
-          {/* Campo de entrada para el comentario */}
-          <input
-            type="text"
-            placeholder="Comentar"
-            value={newComment}
-            onChange={e => setNewComment(e.target.value)}
-          />
-          {/* Botón para agregar o editar el comentario */}
-          <button className="mb-3" onClick={handleAddOrUpdateComment}>
-            Agregar/Editar Comentario
-          </button>
-          <br />
-          <button onClick={() => setDetailsVisible(!detailsVisible)}>
-            {detailsVisible ? 'Ocultar detalles' : 'Mostrar detalles'}
-          </button>
-          <button onClick={handleDeleteRepository}>Eliminar Repositorio</button>
-          {detailsVisible ? (
-            <div>
-              <h4 className="mt-3">Detalles adicionales:</h4>
-              {repositoryData.reposlist.map((repo, index) => (
-                <div key={index} className="mt-3">
-                  <h5>Repositorio {index + 1}</h5>
-                  <p className="mt-3">Nombre: {repo.name}</p>
-                  <p>Usuario: {repo.user}</p>
-                  <p>Descripción: {repo.description}</p>
-                  <p>Tecnología: {repo.language}</p>
-                  <p>
-                    Fecha de creación:{' '}
-                    {repo.created_at
-                      ? format(new Date(repo.created_at), 'dd/MM/yyyy HH:mm')
-                      : 'Fecha no disponible'}
-                  </p>
-                  <p>
-                    Última actualización:{' '}
-                    {repo.pushed_at
-                      ? format(new Date(repo.pushed_at), 'dd/MM/yyyy HH:mm')
-                      : 'Fecha no disponible'}
-                  </p>
-                  <p className="mb-4">URL: {repo.url}</p>
-                  <hr className="mt-4 text-light" />
-                </div>
-              ))}
+      <Header />
+      <div className="repos-list-bd-container">
+        <div className="input-container">
+          <div className="search-panels">
+            <div className="btn-container-bd">
+              <button className="btn-clear" onClick={handleGoToUsers}>
+                Usuarios buscados
+              </button>
+              <br />
+              <button className="btn-clear" onClick={handleGoToUsers}>
+                Buscar usuarios
+              </button>
+              <br />
+              <button className="btn-clear" onClick={handleGoToRepos}>
+                Buscar repositorios
+              </button>
+              <br />
+              <button className="btn-back" onClick={handleGoToHome}>
+                <FontAwesomeIcon icon={faHouseUser} className="" />
+              </button>
             </div>
-          ) : null}
+          </div>
         </div>
-      ) : (
-        <p>Cargando detalles del repositorio...</p>
-      )}
+
+        <div className="repos-details-bd">
+          {repositoryData ? (
+            <div className="">
+              <h3 className="mb-3">
+                Búsqueda realizada: {repositoryData.search}
+              </h3>
+              <div className="line-h2"></div>
+              <p className="mt-3">Usuario: {repositoryData.user.username}</p>
+              <p>
+                Fecha de creación:{' '}
+                {repositoryData.createdAt
+                  ? format(
+                      new Date(repositoryData.createdAt),
+                      'dd/MM/yyyy HH:mm'
+                    )
+                  : 'Fecha no disponible'}
+              </p>
+              <p>
+                Última actualización:{' '}
+                {repositoryData.updatedAt
+                  ? format(
+                      new Date(repositoryData.updatedAt),
+                      'dd/MM/yyyy HH:mm'
+                    )
+                  : 'Fecha no disponible'}
+              </p>
+              <p>Comentario: {repositoryData.comment}</p>
+              {/* Campo de entrada para el comentario */}
+              <input
+                className="repo-details-input"
+                type="text"
+                placeholder="Agregar / Editar Comentario"
+                maxLength={50}
+                value={newComment}
+                onChange={e => setNewComment(e.target.value)}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    handleAddOrUpdateComment()
+                  }
+                }}
+              />
+              {/* Botón para agregar o editar el comentario */}
+              <button
+                className="mb-3 btn-comment-repos"
+                onClick={handleAddOrUpdateComment}
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </button>
+              <br />
+              <button
+                className="btn-show-details"
+                onClick={() => setDetailsVisible(!detailsVisible)}
+              >
+                {detailsVisible ? (
+                  <>
+                    <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
+                  </>
+                )}
+              </button>
+              <button
+                className="ms-3 btn-delete-details"
+                onClick={handleDeleteRepository}
+              >
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  style={{ marginRight: '7px' }}
+                />
+                Eliminar búsqueda
+              </button>
+              {detailsVisible ? (
+                <div>
+                  <h4 className="mt-3">Detalles adicionales:</h4>
+                  {repositoryData.reposlist.map((repo, index) => (
+                    <div key={index} className="mt-3">
+                      <h5>Repositorio {index + 1}</h5>
+                      <p className="mt-3">Nombre: {repo.name}</p>
+                      <p>Usuario: {repo.user}</p>
+                      <p>Descripción: {repo.description}</p>
+                      <p>Tecnología: {repo.language}</p>
+                      <p>
+                        Fecha de creación:{' '}
+                        {repo.created_at
+                          ? format(
+                              new Date(repo.created_at),
+                              'dd/MM/yyyy HH:mm'
+                            )
+                          : 'Fecha no disponible'}
+                      </p>
+                      <p>
+                        Última actualización:{' '}
+                        {repo.pushed_at
+                          ? format(new Date(repo.pushed_at), 'dd/MM/yyyy HH:mm')
+                          : 'Fecha no disponible'}
+                      </p>
+                      <p className="mb-4">URL: {repo.url}</p>
+                      <hr className="mt-4 text-light" />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <p>Cargando detalles del repositorio...</p>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
