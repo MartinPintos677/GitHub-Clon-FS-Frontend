@@ -32,7 +32,7 @@ const RepositoryDetails: React.FC = () => {
   const { state } = useAuth()
   const [repositoryData, setRepositoryData] = useState<Repository | null>(null)
   const [detailsVisible, setDetailsVisible] = useState(false)
-  const [newComment, setNewComment] = useState('') // Nuevo estado para el comentario
+  const [newComment, setNewComment] = useState('')
 
   useEffect(() => {
     const fetchRepositoryData = async () => {
@@ -54,24 +54,11 @@ const RepositoryDetails: React.FC = () => {
     fetchRepositoryData()
   }, [id])
 
-  const handleDeleteRepository = async () => {
-    try {
-      await axios.delete(`http://localhost:3000/searchrepos/${id}`, {
-        headers: {
-          Authorization: `${state.token}`
-        }
-      })
-      navigate(`/user/${state.username}/reposlistbd`)
-    } catch (error) {
-      console.error('Error al eliminar el repositorio', error)
-    }
-  }
-
   const handleAddOrUpdateComment = async () => {
     try {
       const currentDate = new Date() // Obtiene la fecha actual
 
-      const response = await axios.patch(
+      await axios.patch(
         `http://localhost:3000/searchrepos/${id}`,
         { comment: newComment, updatedAt: currentDate.toISOString() },
         {
@@ -90,9 +77,22 @@ const RepositoryDetails: React.FC = () => {
         setRepositoryData(updatedRepositoryData)
       }
       setNewComment('') // Limpia el campo de entrada
-      console.log('Comentario actualizado:', response.data)
+      //console.log('Comentario actualizado:', response.data)
     } catch (error) {
       console.error('Error al agregar o actualizar el comentario', error)
+    }
+  }
+
+  const handleDeleteRepository = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/searchrepos/${id}`, {
+        headers: {
+          Authorization: `${state.token}`
+        }
+      })
+      navigate(`/user/${state.username}/reposlistbd`)
+    } catch (error) {
+      console.error('Error al eliminar el repositorio', error)
     }
   }
 
@@ -139,7 +139,7 @@ const RepositoryDetails: React.FC = () => {
               <h4 className="mt-3">Detalles adicionales:</h4>
               {repositoryData.reposlist.map((repo, index) => (
                 <div key={index} className="mt-3">
-                  <h5>Repositorio {index + 1}:</h5>
+                  <h5>Repositorio {index + 1}</h5>
                   <p className="mt-3">Nombre: {repo.name}</p>
                   <p>Usuario: {repo.user}</p>
                   <p>Descripción: {repo.description}</p>
