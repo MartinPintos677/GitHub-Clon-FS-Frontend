@@ -68,7 +68,7 @@ const GitHubRepos = () => {
             }
           }
         )
-        console.log('GitHub API response:', response.data)
+        // console.log('GitHub API response:', response.data)
 
         // Verifica si 'response.data.reposlist' contiene los datos de los repositorios.
         const repositoriesData = response.data.reposlist || []
