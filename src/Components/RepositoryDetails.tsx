@@ -258,8 +258,10 @@ const RepositoryDetails: React.FC = () => {
                       </h5>
                       <p className="mt-3">Nombre: {repo.name}</p>
                       <p>Usuario: {repo.user}</p>
-                      <p>Descripción: {repo.description}</p>
-                      <p>Tecnología: {repo.language}</p>
+                      {repo.description && (
+                        <p>Descripción: {repo.description}</p>
+                      )}
+                      {repo.language && <p>Tecnología: {repo.language}</p>}
                       <p>
                         Fecha de creación:{' '}
                         {repo.created_at
