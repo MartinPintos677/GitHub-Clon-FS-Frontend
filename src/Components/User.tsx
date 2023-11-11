@@ -30,7 +30,7 @@ const User: React.FC = () => {
         //console.log(`${state.token}`)
 
         const response = await axios.get(
-          `http://localhost:3000/user/user/${state.username}`,
+          `http://localhost:3000/user/${state.username}`,
           {
             headers: {
               Authorization: `${state.token}`

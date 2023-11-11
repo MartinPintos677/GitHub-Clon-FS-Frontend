@@ -74,3 +74,35 @@
 .btn-delete-details:hover {
   color: #d32f2f;
 }
+
+/* Estilo para la sección de paginación */
+.pagination-repos-details {
+  display: flex;
+  margin-left: -5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo para los botones de paginación */
+.pagination-repos-details button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+
+  padding: 10px 20px; /* Espaciado interno */
+  margin: 0 5px; /* Espacio entre los botones */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px;
+}
+
+/* Estilo para el botón activo de la página actual */
+.pagination-repos-details button.active {
+  background-color: #0056b3; /* Cambio de color de fondo para el botón activo */
+}
+
+/* Estilo para el botón de página al pasar el cursor */
+.pagination-repos-details button:hover {
+  background-color: #0056b3;
+}

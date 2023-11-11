@@ -44,6 +44,8 @@ const RepositoryDetails: React.FC = () => {
   const [repositoryData, setRepositoryData] = useState<Repository | null>(null)
   const [detailsVisible, setDetailsVisible] = useState(false)
   const [newComment, setNewComment] = useState('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const repositoriesPerPage = 10
 
   useEffect(() => {
     const fetchRepositoryData = async () => {
@@ -122,6 +124,20 @@ const RepositoryDetails: React.FC = () => {
   const handleGoToBackUsers = () => {
     navigate(`/user/${state.username}/reposlistbd`)
   }
+
+  const indexOfLastRepository = currentPage * repositoriesPerPage
+  const indexOfFirstRepository = indexOfLastRepository - repositoriesPerPage
+
+  const currentRepositories = repositoryData
+    ? repositoryData.reposlist.slice(
+        indexOfFirstRepository,
+        indexOfLastRepository
+      )
+    : []
+
+  const totalPages = repositoryData
+    ? Math.ceil((repositoryData.reposlist.length || 0) / repositoriesPerPage)
+    : 0
 
   return (
     <div>
@@ -230,12 +246,16 @@ const RepositoryDetails: React.FC = () => {
                   Eliminar búsqueda
                 </button>
               </div>
+
               {detailsVisible ? (
                 <div>
                   <h4 className="mt-3">Detalles adicionales:</h4>
-                  {repositoryData.reposlist.map((repo, index) => (
+                  {currentRepositories.map((repo, index) => (
                     <div key={index} className="mt-3">
-                      <h5>Repositorio {index + 1}</h5>
+                      <h5>
+                        Repositorio{' '}
+                        {(currentPage - 1) * repositoriesPerPage + index + 1}
+                      </h5>
                       <p className="mt-3">Nombre: {repo.name}</p>
                       <p>Usuario: {repo.user}</p>
                       <p>Descripción: {repo.description}</p>
@@ -259,6 +279,17 @@ const RepositoryDetails: React.FC = () => {
                       <hr className="mt-4 text-light" />
                     </div>
                   ))}
+                  <div className="pagination-repos-details mt-4">
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentPage(index + 1)}
+                        className={currentPage === index + 1 ? 'active' : ''}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               ) : null}
             </div>
