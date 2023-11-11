@@ -38,6 +38,7 @@
   border-bottom-left-radius: 0;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  border-left: none !important;
 }
 
 .btn-comment-repos:hover {
