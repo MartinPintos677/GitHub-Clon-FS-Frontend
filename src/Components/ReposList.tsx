@@ -58,7 +58,6 @@ const GitHubRepos = () => {
       setIsLoading(true) // Iniciar la carga
 
       try {
-        //console.log('searchQuery before HTTP request:', searchQuery)
         const response = await axios.post(
           'http://localhost:3000/searchrepos',
           { searchTerm: searchQuery },

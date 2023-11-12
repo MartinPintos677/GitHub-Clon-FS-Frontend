@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../Components/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
@@ -9,9 +9,8 @@ import '../Css/InputSearch.css'
 import { useAuth } from '../Auth/AuthContext'
 
 type GitHubUser = {
-  login: string
-  avatar_url: string
-  html_url: string
+  username: string
+  avatar: string
 }
 
 const GitHubUsers = () => {
@@ -19,20 +18,56 @@ const GitHubUsers = () => {
   const [users, setUsers] = useState<GitHubUser[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [hasSearched, setHasSearched] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [headerMessage, setHeaderMessage] = useState('Buscador de usuarios')
   const usersPerPage = 10
   const navigate = useNavigate()
   const { state } = useAuth()
 
+  useEffect(() => {
+    if (hasSearched) {
+      // Verificar la longitud de usuarios y establecer headerMessage aquí
+      if (users.length === 1) {
+        setHeaderMessage('Resultados de la búsqueda: (1 usuario)')
+      } else if (users.length > 1) {
+        setHeaderMessage(
+          `Resultados de la búsqueda: (${users.length} usuarios)`
+        )
+      } else {
+        setHeaderMessage('Ningún usuario con el nombre indicado.')
+      }
+    } else {
+      setHeaderMessage('Buscador de usuarios')
+    }
+  }, [hasSearched, users])
+
   const handleSearch = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${searchQuery}&per_page=100`
-      )
-      setUsers(response.data.items)
-      setCurrentPage(1) // Restablece la página actual a la primera página después de cada búsqueda
-      setHasSearched(true)
-    } catch (error) {
-      console.error('Error fetching GitHub users:', error)
+    if (searchQuery.trim() !== '') {
+      setIsLoading(true) // Iniciar la carga
+
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/searchuser',
+          { searchTerm: searchQuery },
+          {
+            headers: {
+              Authorization: `${state.token}`
+            }
+          }
+        )
+
+        const searchData = response.data || {}
+
+        const usersData = searchData.usersList || []
+
+        setUsers(usersData)
+        setCurrentPage(1)
+        setHasSearched(true)
+      } catch (error) {
+        console.error('Error fetching GitHub users:', error)
+      } finally {
+        setIsLoading(false) // Detener la carga después de la búsqueda
+      }
     }
   }
 
@@ -58,20 +93,6 @@ const GitHubUsers = () => {
 
   // Calcular el número total de páginas
   const totalPages = Math.ceil(users.length / usersPerPage)
-
-  // Determina el mensaje del encabezado en función del número de usuarios encontrados
-  let headerMessage = ''
-  if (hasSearched) {
-    if (users.length === 1) {
-      headerMessage = 'Resultados de la búsqueda: (1 usuario)'
-    } else if (users.length > 1) {
-      headerMessage = `Resultados de la búsqueda: (${users.length} usuarios)`
-    } else {
-      headerMessage = 'Ningún usuario con el nombre indicado.'
-    }
-  } else {
-    headerMessage = 'Buscador de usuarios'
-  }
 
   return (
     <div>
@@ -126,28 +147,34 @@ const GitHubUsers = () => {
 
         <div className="users-container">
           <div className="user-list">
-            <h2>{headerMessage}</h2>
-            <ul>
-              {currentUsers.map(user => (
-                <Link
-                  to={`/user/${user.login}/userslist/${user.login}`}
-                  target="_blank"
-                >
-                  <li
-                    key={user.login}
-                    className="d-grid justify-content-center align-items-center mb-4"
-                  >
-                    <img
-                      className="mb-2"
-                      src={user.avatar_url}
-                      alt={`${user.login}'s avatar`}
-                    />
+            <h2>{hasSearched ? headerMessage : 'Buscador de repositorios'}</h2>
+            {isLoading ? (
+              <p className="loading-repos">Cargando usuarios...</p>
+            ) : hasSearched ? (
+              currentUsers.length > 0 ? (
+                <ul>
+                  {currentUsers.map(user => (
+                    <Link
+                      to={`/user/${user.username}/userslist/${user.username}`}
+                      target="_blank"
+                    >
+                      <li
+                        key={user.username}
+                        className="d-grid justify-content-center align-items-center mb-4"
+                      >
+                        <img
+                          className="mb-2"
+                          src={user.avatar}
+                          alt={`${user.username}'s avatar`}
+                        />
 
-                    {user.login}
-                  </li>
-                </Link>
-              ))}
-            </ul>
+                        {user.username}
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
+              ) : null
+            ) : null}
           </div>
           {/* Agrega la paginación aquí */}
           <div className="pagination mb-3">
