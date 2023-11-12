@@ -11,7 +11,7 @@ import '../Css/ReposList.css'
 import '../Css/InputSearch.css'
 import { useAuth } from '../Auth/AuthContext'
 
-export type GitHubRepository = {
+type GitHubRepository = {
   name: string
   user: string
   description: string
