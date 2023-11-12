@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouseUser, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faHouseUser, faDatabase } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'date-fns'
 import Header from '../Components/Header'
 import RepoModal from './RepoModal'
@@ -13,11 +13,11 @@ import { useAuth } from '../Auth/AuthContext'
 
 type GitHubRepository = {
   name: string
-  user: string
+  //user: string
   description: string
   language: string
-  url: string
-  created_at: string
+  //url: string
+  //created_at: string
   pushed_at: string
 }
 
@@ -184,7 +184,7 @@ const GitHubRepos = () => {
                 <FontAwesomeIcon icon={faHouseUser} className="" />
               </button>
               <button className="btn-back ms-4" onClick={handleGoToAuth}>
-                <FontAwesomeIcon icon={faLock} className="" />
+                <FontAwesomeIcon icon={faDatabase} className="" />
               </button>
             </div>
           </div>

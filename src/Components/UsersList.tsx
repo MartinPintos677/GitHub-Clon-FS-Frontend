@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Header from '../Components/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
+import { faHouseUser, faDatabase } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import '../Css/UsersList.css'
@@ -86,6 +86,10 @@ const GitHubUsers = () => {
     navigate(`/user/${state.username}`)
   }
 
+  const handleGoToAuth = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
+  }
+
   // Calcular el índice inicial y final de los usuarios a mostrar en la página actual
   const indexOfLastUser = currentPage * usersPerPage
   const indexOfFirstUser = indexOfLastUser - usersPerPage
@@ -140,6 +144,9 @@ const GitHubUsers = () => {
               <br />
               <button className="btn-back" onClick={handleGoToHome}>
                 <FontAwesomeIcon icon={faHouseUser} className="" />
+              </button>
+              <button className="btn-back ms-4" onClick={handleGoToAuth}>
+                <FontAwesomeIcon icon={faDatabase} className="" />
               </button>
             </div>
           </div>

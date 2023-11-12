@@ -92,7 +92,7 @@ const RepositoryList: React.FC = () => {
           </div>
         </div>
 
-        <div className="repos-list-bd">
+        <div className="repos-list-bd mb-5">
           <h1 className="fs-3">Lista de Repositorios Buscados</h1>
           <div className="line-h2"></div>
           <ul className="list-repos-searched">
