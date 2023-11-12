@@ -154,7 +154,7 @@ const GitHubUsers = () => {
 
         <div className="users-container">
           <div className="user-list">
-            <h2>{hasSearched ? headerMessage : 'Buscador de repositorios'}</h2>
+            <h2>{hasSearched ? headerMessage : 'Buscador de usuarios'}</h2>
             {isLoading ? (
               <p className="loading-repos">Cargando usuarios...</p>
             ) : hasSearched ? (

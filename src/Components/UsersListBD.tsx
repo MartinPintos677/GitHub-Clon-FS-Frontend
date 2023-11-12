@@ -9,21 +9,21 @@ import '../Css/ReposListBD.css'
 
 // Agregar BTN de Usuarios Buscados
 
-interface SearchRepository {
+interface SearchUser {
   _id: string
   search: string
 }
 
-const RepositoryList: React.FC = () => {
-  const [searches, setSearches] = useState<SearchRepository[]>([])
+const UserList: React.FC = () => {
+  const [searches, setSearches] = useState<SearchUser[]>([])
   const { state } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchSearches = async () => {
       try {
-        const response = await axios.get<SearchRepository[]>(
-          'http://localhost:3000/searchrepos',
+        const response = await axios.get<SearchUser[]>(
+          'http://localhost:3000/searchuser',
           {
             headers: {
               Authorization: `${state.token}`
@@ -32,7 +32,7 @@ const RepositoryList: React.FC = () => {
         )
         setSearches(response.data)
       } catch (error) {
-        console.error('Error al obtener las búsquedas de repositorios', error)
+        console.error('Error al obtener las búsquedas de usuarios', error)
       }
     }
 
@@ -41,7 +41,7 @@ const RepositoryList: React.FC = () => {
 
   const handleDeleteSearch = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/searchrepos/${id}`, {
+      await axios.delete(`http://localhost:3000/searchuser/${id}`, {
         headers: {
           Authorization: `${state.token}`
         }
@@ -50,12 +50,12 @@ const RepositoryList: React.FC = () => {
       const updatedSearches = searches.filter(search => search._id !== id)
       setSearches(updatedSearches)
     } catch (error) {
-      console.error('Error al eliminar la búsqueda de repositorios', error)
+      console.error('Error al eliminar la búsqueda de usuarios', error)
     }
   }
 
-  const handleGoToUsersBD = () => {
-    navigate(`/user/${state.username}/userslistbd`)
+  const handleGoToReposSearched = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
   }
 
   const handleGoToUsers = () => {
@@ -77,8 +77,8 @@ const RepositoryList: React.FC = () => {
         <div className="input-container">
           <div className="search-panels">
             <div className="btn-container-bd">
-              <button className="btn-clear" onClick={handleGoToUsersBD}>
-                Usuarios buscados
+              <button className="btn-clear" onClick={handleGoToReposSearched}>
+                Repositorios buscados
               </button>
               <br />
               <button className="btn-clear" onClick={handleGoToUsers}>
@@ -97,7 +97,7 @@ const RepositoryList: React.FC = () => {
         </div>
 
         <div className="repos-list-bd mb-5">
-          <h1 className="fs-3">Lista de Repositorios Buscados</h1>
+          <h1 className="fs-3">Lista de Usuarios Buscados</h1>
           <div className="line-h2"></div>
           <ul className="list-repos-searched">
             {searches.map(search => (
@@ -123,4 +123,4 @@ const RepositoryList: React.FC = () => {
   )
 }
 
-export default RepositoryList
+export default UserList

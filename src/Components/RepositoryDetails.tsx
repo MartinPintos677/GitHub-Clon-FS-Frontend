@@ -125,6 +125,10 @@ const RepositoryDetails: React.FC = () => {
     navigate(`/user/${state.username}/reposlistbd`)
   }
 
+  const handleGoToUsersBD = () => {
+    navigate(`/user/${state.username}/userslistbd`)
+  }
+
   const indexOfLastRepository = currentPage * repositoriesPerPage
   const indexOfFirstRepository = indexOfLastRepository - repositoriesPerPage
 
@@ -146,7 +150,7 @@ const RepositoryDetails: React.FC = () => {
         <div className="input-container">
           <div className="search-panels">
             <div className="btn-container-bd">
-              <button className="btn-clear" onClick={handleGoToUsers}>
+              <button className="btn-clear" onClick={handleGoToUsersBD}>
                 Usuarios buscados
               </button>
               <br />

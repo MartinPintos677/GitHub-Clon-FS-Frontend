@@ -5,6 +5,7 @@ import UserList from './Pages/PageUsersList'
 import SelectedUser from './Pages/PageSelectedUser'
 import ReposList from './Pages/PageReposList'
 import ReposListBD from './Components/ReposListBD'
+import UsersListBD from './Components/UsersListBD'
 import SelectedRepoBD from './Components/RepositoryDetails'
 import { useAuth } from './Auth/AuthContext'
 import './App.css'
@@ -41,22 +42,11 @@ function App() {
       />
       <Route
         path="/user/:username/reposlistbd/:id"
-        element={
-          state.isLoggedIn ? (
-            <SelectedRepoBD
-              name={''}
-              user={''}
-              description={''}
-              language={''}
-              comment={''}
-              url={''}
-              created_at={''}
-              pushed_at={''}
-            />
-          ) : (
-            <Navigate to="/" />
-          )
-        }
+        element={state.isLoggedIn ? <SelectedRepoBD /> : <Navigate to="/" />}
+      />
+      <Route
+        path="/user/:username/userslistbd"
+        element={state.isLoggedIn ? <UsersListBD /> : <Navigate to="/" />}
       />
     </Routes>
   )
