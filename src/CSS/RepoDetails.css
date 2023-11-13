@@ -107,3 +107,9 @@
 .pagination-repos-details button:hover {
   background-color: #0056b3;
 }
+
+.avatar-image-details {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}

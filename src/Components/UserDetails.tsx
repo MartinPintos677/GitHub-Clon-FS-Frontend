@@ -243,9 +243,15 @@ const UserDetails: React.FC = () => {
                       <h5>
                         Usuario {(currentPage - 1) * usersPerPage + index + 1}
                       </h5>
-                      <p className="mt-3">{user.username}</p>
-
-                      <hr className="mt-4 text-light" />
+                      <div className="d-flex justify-content-between">
+                        <img
+                          src={user.avatar}
+                          alt="Avatar"
+                          className="avatar-image-details mt-3"
+                        />
+                        <p className="mt-5 fs-5">{user.username}</p>
+                      </div>
+                      <hr className="mt-3 text-light" />
                     </div>
                   ))}
 
