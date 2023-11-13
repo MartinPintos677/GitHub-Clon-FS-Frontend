@@ -122,8 +122,8 @@ const UserDetails: React.FC = () => {
     navigate(`/user/${state.username}/userslistbd`)
   }
 
-  const handleGoToUsersBD = () => {
-    navigate(`/user/${state.username}/userslistbd`)
+  const handleGoToReposBD = () => {
+    navigate(`/user/${state.username}/reposlistbd`)
   }
 
   const indexOfLastRepository = currentPage * usersPerPage
@@ -144,8 +144,8 @@ const UserDetails: React.FC = () => {
         <div className="input-container">
           <div className="search-panels">
             <div className="btn-container-bd">
-              <button className="btn-clear" onClick={handleGoToUsersBD}>
-                Usuarios buscados
+              <button className="btn-clear" onClick={handleGoToReposBD}>
+                Repositorios buscados
               </button>
               <br />
               <button className="btn-clear" onClick={handleGoToUsers}>
@@ -184,7 +184,7 @@ const UserDetails: React.FC = () => {
                   ? format(new Date(userData.updatedAt), 'dd/MM/yyyy HH:mm')
                   : 'Fecha no disponible'}
               </p>
-              <p>Resultados encontrados: {userData.usersList.length}</p>
+              <p>Usuarios encontrados: {userData.usersList.length}</p>
               {userData.comment && <p>Comentario: {userData.comment}</p>}
               {/* Campo de entrada para el comentario */}
               <input

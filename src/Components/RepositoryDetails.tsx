@@ -198,7 +198,7 @@ const RepositoryDetails: React.FC = () => {
                     )
                   : 'Fecha no disponible'}
               </p>
-              <p>Resultados encontrados: {repositoryData.reposlist.length}</p>
+              <p>Repositorios encontrados: {repositoryData.reposlist.length}</p>
               {repositoryData.comment && (
                 <p>Comentario: {repositoryData.comment}</p>
               )}
