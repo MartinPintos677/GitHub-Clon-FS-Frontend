@@ -26,7 +26,6 @@ const GitHubUsers = () => {
 
   useEffect(() => {
     if (hasSearched) {
-      // Verificar la longitud de usuarios y establecer headerMessage aquí
       if (users.length === 1) {
         setHeaderMessage('Resultados de la búsqueda: (1 usuario)')
       } else if (users.length > 1) {
@@ -82,7 +81,6 @@ const GitHubUsers = () => {
   }
 
   const handleGoToHome = () => {
-    // Redirige a la ruta '/user/${state.username}'
     navigate(`/user/${state.username}`)
   }
 
