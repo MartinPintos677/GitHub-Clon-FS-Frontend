@@ -87,7 +87,7 @@ const GitHubUsers = () => {
   }
 
   const handleGoToAuth = () => {
-    navigate(`/user/${state.username}/reposlistbd`)
+    navigate(`/user/${state.username}/userslistbd`)
   }
 
   // Calcular el índice inicial y final de los usuarios a mostrar en la página actual

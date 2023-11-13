@@ -103,7 +103,7 @@ const UserList: React.FC = () => {
             {searches.map(search => (
               <li key={search._id}>
                 <Link
-                  to={`/user/${state.username}/reposlistbd/${search._id}`}
+                  to={`/user/${state.username}/userslistbd/${search._id}`}
                   className="repos-list-bd-a"
                 >
                   {search.search}
