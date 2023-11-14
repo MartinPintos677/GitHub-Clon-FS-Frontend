@@ -140,7 +140,7 @@ const UserDetails: React.FC = () => {
   return (
     <div>
       <Header />
-      <div className="repos-list-bd-container">
+      <div className="repos-details-bd-container">
         <div className="input-container">
           <div className="search-panels">
             <div className="btn-container-bd">

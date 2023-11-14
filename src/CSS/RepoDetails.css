@@ -1,3 +1,8 @@
+.repos-details-bd-container {
+  display: flex;
+  padding-top: 70px;
+}
+
 .repos-details-bd {
   max-width: 520px;
   /* margin: 0 auto;*/
@@ -113,4 +118,53 @@
   height: 70px;
   border-radius: 50%;
   border: 2px solid #fff;
+}
+
+@media (max-width: 1100px) {
+  .repos-details-bd {
+    margin-left: 150px;
+  }
+}
+
+@media (max-width: 900px) {
+  .repos-details-bd {
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .repos-details-bd-container {
+    display: grid;
+  }
+}
+
+@media (max-width: 620px) {
+  .repos-details-bd {
+    max-width: 420px;
+  }
+
+  .repo-details-input {
+    width: 300px;
+  }
+}
+
+@media (max-width: 500px) {
+  .repos-details-bd {
+    max-width: 320px;
+  }
+
+  .repo-details-input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 420px) {
+  .repos-details-bd {
+    max-width: 320px;
+    margin-left: 20px;
+  }
+
+  .repo-details-input {
+    width: 200px;
+  }
 }
