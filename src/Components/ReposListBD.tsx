@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan, faHouseUser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrashCan,
+  faHouseUser,
+  faDatabase
+} from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Header from '../Components/Header'
@@ -78,6 +82,10 @@ const RepositoryList: React.FC = () => {
           <div className="search-panels">
             <div className="btn-container-bd">
               <button className="btn-clear" onClick={handleGoToUsersBD}>
+                <FontAwesomeIcon
+                  icon={faDatabase}
+                  style={{ marginRight: '7px' }}
+                />
                 Usuarios buscados
               </button>
               <br />

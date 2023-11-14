@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../Components/Header'
 import { useAuth } from '../Auth/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserGroup, faLock } from '@fortawesome/free-solid-svg-icons'
+import { faUserGroup, faDatabase } from '@fortawesome/free-solid-svg-icons'
 import RepoModal from './UserStateModal'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -120,7 +120,11 @@ const User: React.FC = () => {
             </button>
             <br />
             <button className="btn-back" onClick={handleGoToAuth}>
-              <FontAwesomeIcon icon={faLock} className="" />
+              <FontAwesomeIcon
+                icon={faDatabase}
+                style={{ marginRight: '7px' }}
+              />{' '}
+              Base de datos
             </button>
           </div>
         </div>

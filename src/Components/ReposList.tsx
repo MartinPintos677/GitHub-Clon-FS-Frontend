@@ -184,7 +184,11 @@ const GitHubRepos = () => {
                 <FontAwesomeIcon icon={faHouseUser} className="" />
               </button>
               <button className="btn-back ms-4" onClick={handleGoToAuth}>
-                <FontAwesomeIcon icon={faDatabase} className="" />
+                <FontAwesomeIcon
+                  icon={faDatabase}
+                  style={{ marginRight: '7px' }}
+                />
+                Base de datos
               </button>
             </div>
           </div>

@@ -9,7 +9,8 @@ import {
   faArrowDown,
   faArrowUp,
   faTrashCan,
-  faCircleArrowLeft
+  faCircleArrowLeft,
+  faDatabase
 } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../Auth/AuthContext'
 import axios from 'axios'
@@ -145,6 +146,10 @@ const UserDetails: React.FC = () => {
           <div className="search-panels">
             <div className="btn-container-bd">
               <button className="btn-clear" onClick={handleGoToReposBD}>
+                <FontAwesomeIcon
+                  icon={faDatabase}
+                  style={{ marginRight: '7px' }}
+                />
                 Repositorios buscados
               </button>
               <br />
