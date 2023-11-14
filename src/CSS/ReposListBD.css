@@ -8,6 +8,11 @@
   max-width: 300px;
 }
 
+/*.repos-list-bd-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}*/
+
 .repos-list-bd {
   max-width: 600px;
   /* margin: 0 auto;*/
@@ -99,5 +104,14 @@
     margin-left: 0px;
     margin: 0 auto;
     margin-top: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media (max-width: 420px) {
+  .repos-list-bd-container {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
