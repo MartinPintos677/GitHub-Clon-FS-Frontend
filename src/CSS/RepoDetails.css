@@ -120,13 +120,13 @@
   border: 2px solid #fff;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1299px) {
   .repos-details-bd {
-    margin-left: 100px;
+    margin-left: 200px;
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1020px) {
   .repos-details-bd {
     margin-left: 50px;
   }
