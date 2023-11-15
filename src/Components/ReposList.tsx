@@ -180,15 +180,16 @@ const GitHubRepos = () => {
                 Buscar usuarios
               </button>
               <br />
-              <button className="btn-back" onClick={handleGoToHome}>
-                <FontAwesomeIcon icon={faHouseUser} className="" />
-              </button>
-              <button className="btn-back ms-4" onClick={handleGoToAuth}>
+              <button className="btn-back" onClick={handleGoToAuth}>
                 <FontAwesomeIcon
                   icon={faDatabase}
                   style={{ marginRight: '7px' }}
                 />
                 Base de datos
+              </button>
+              <br />
+              <button className="btn-back" onClick={handleGoToHome}>
+                <FontAwesomeIcon icon={faHouseUser} className="" />
               </button>
             </div>
           </div>

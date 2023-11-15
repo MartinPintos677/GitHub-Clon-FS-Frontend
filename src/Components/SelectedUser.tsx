@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUserGroup,
   faHouseUser,
-  faCircleArrowLeft
+  faDatabase
 } from '@fortawesome/free-solid-svg-icons'
 import RepoModal from './RepoModal'
 import Header from '../Components/Header'
@@ -80,13 +80,16 @@ const SelectedUser = () => {
     setIsModalOpen(false)
   }
 
+  const handleGoToUsers = () => {
+    navigate(`/user/${state.username}/userslist`)
+  }
+
   const handleGoToRepositories = () => {
-    // Redirige a la ruta '/user/${state.username}'
     navigate(`/user/${state.username}/reposlist`)
   }
 
-  const handleGoToBackUsers = () => {
-    navigate(`/user/${state.username}/userslist`)
+  const handleGoToAuth = () => {
+    navigate(`/user/${state.username}/userslistbd`)
   }
 
   const handleGoToHome = () => {
@@ -147,14 +150,23 @@ const SelectedUser = () => {
               </div>
               <hr className="text-light" />
               <div className="btn-container">
+                <button className="btn-clear" onClick={handleGoToUsers}>
+                  Buscar usuarios
+                </button>
+                <br />
                 <button className="btn-back" onClick={handleGoToRepositories}>
                   Buscar repositorios
                 </button>
                 <br />
-                <button className="btn-back" onClick={handleGoToBackUsers}>
-                  <FontAwesomeIcon icon={faCircleArrowLeft} className="" />
+                <button className="btn-back" onClick={handleGoToAuth}>
+                  <FontAwesomeIcon
+                    icon={faDatabase}
+                    style={{ marginRight: '7px' }}
+                  />
+                  Base de datos
                 </button>
-                <button className="btn-back ms-4" onClick={handleGoToHome}>
+                <br />
+                <button className="btn-back" onClick={handleGoToHome}>
                   <FontAwesomeIcon icon={faHouseUser} className="" />
                 </button>
               </div>

@@ -62,7 +62,7 @@ const User: React.FC = () => {
   }
 
   const handleGoToAuth = () => {
-    navigate(`/user/${state.username}/reposlistbd`)
+    navigate(`/user/${state.username}/userslistbd`)
   }
 
   const handleRepoClick = () => {
