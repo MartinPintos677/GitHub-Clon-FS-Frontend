@@ -13,11 +13,11 @@ import { useAuth } from '../Auth/AuthContext'
 
 type GitHubRepository = {
   name: string
-  //user: string
+  user: string
   description: string
   language: string
-  //url: string
-  //created_at: string
+  url: string
+  created_at: string
   pushed_at: string
 }
 
