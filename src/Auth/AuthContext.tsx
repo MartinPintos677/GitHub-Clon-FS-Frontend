@@ -5,7 +5,6 @@ type AuthState = {
   isLoggedIn: boolean
   username: string
   token: string | null
-  tokenCreationTime: number | null // Agregar la fecha de creación del token al estado
 }
 
 type AuthAction =
@@ -16,7 +15,7 @@ type AuthAction =
 interface AuthContextType {
   state: AuthState
   dispatch: Dispatch<AuthAction>
-  login: (username: string, token: string) => void
+  login: (username: string, token: string) => void // Modificar la función de inicio de sesión para incluir el token
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -39,49 +38,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Recupera los datos de autenticación de localStorage si están disponibles
   const localStorageIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
   const localStorageUsername = localStorage.getItem('username') || ''
-  const localStorageToken = localStorage.getItem('token') || null
-  const localStorageTokenCreationTime =
-    localStorage.getItem('tokenCreationTime') || null
+  const localStorageToken = localStorage.getItem('token') || null // Recuperar el token
 
   const initialState: AuthState = {
     isLoggedIn: localStorageIsLoggedIn,
     username: localStorageUsername,
-    token: localStorageToken,
-    tokenCreationTime: localStorageTokenCreationTime
-      ? parseInt(localStorageTokenCreationTime)
-      : null // Agregar la fecha de creación del token
+    token: localStorageToken // Agregar el token al estado inicial
   }
 
   const [state, dispatch] = useReducer(
     (prevState: AuthState, action: AuthAction) => {
       switch (action.type) {
         case 'LOGIN':
-          const tokenCreationTime = new Date().getTime() // Timestamp en milisegundos
+          // Al realizar un inicio de sesión exitoso, también almacena los datos en localStorage
           localStorage.setItem('isLoggedIn', 'true')
           localStorage.setItem('username', action.payload.username)
-          localStorage.setItem('token', action.payload.token)
-          localStorage.setItem(
-            'tokenCreationTime',
-            tokenCreationTime.toString()
-          ) // Almacenar la fecha de creación del token
+          localStorage.setItem('token', action.payload.token) // Almacenar el token en localStorage
           return {
             ...prevState,
             isLoggedIn: true,
             username: action.payload.username,
-            token: action.payload.token,
-            tokenCreationTime: tokenCreationTime
+            token: action.payload.token // Agregar el token al estado
           }
         case 'LOGOUT':
+          // Cuando se cierra la sesión, también limpia los datos de localStorage
           localStorage.removeItem('isLoggedIn')
           localStorage.removeItem('username')
-          localStorage.removeItem('token')
-          localStorage.removeItem('tokenCreationTime') // Eliminar la fecha de creación del token
+          localStorage.removeItem('token') // Eliminar el token de localStorage
           return {
             ...prevState,
             isLoggedIn: false,
             username: '',
-            token: null,
-            tokenCreationTime: null // Establecer la fecha de creación del token como nula
+            token: null // Establecer el token como nulo
           }
         default:
           return prevState
