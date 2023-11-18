@@ -229,23 +229,27 @@ const RepositoryDetails: React.FC = () => {
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
               <br />
+
               <div className="btn-update-delete">
+                {repositoryData.reposlist.length > 0 ? (
+                  <button
+                    className="btn-show-details"
+                    onClick={() => setDetailsVisible(!detailsVisible)}
+                  >
+                    {detailsVisible ? (
+                      <>
+                        <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
+                      </>
+                    )}
+                  </button>
+                ) : null}
+
                 <button
-                  className="btn-show-details"
-                  onClick={() => setDetailsVisible(!detailsVisible)}
-                >
-                  {detailsVisible ? (
-                    <>
-                      <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
-                    </>
-                  )}
-                </button>
-                <button
-                  className="ms-3 btn-delete-details"
+                  className="btn-delete-details"
                   onClick={handleDeleteRepository}
                 >
                   <FontAwesomeIcon

@@ -55,7 +55,7 @@ const UserDetails: React.FC = () => {
             }
           }
         )
-        console.log(response.data)
+        //console.log(response.data)
         setUserData(response.data)
       } catch (error) {
         console.error('Error al obtener los detalles del usuario', error)
@@ -88,7 +88,6 @@ const UserDetails: React.FC = () => {
         setUserData(updatedUserData)
       }
       setNewComment('') // Limpia el campo de entrada
-      //console.log('Comentario actualizado:', response.data)
     } catch (error) {
       console.error('Error al agregar o actualizar el comentario', error)
     }
@@ -213,23 +212,27 @@ const UserDetails: React.FC = () => {
                 <FontAwesomeIcon icon={faPenToSquare} />
               </button>
               <br />
+
               <div className="btn-update-delete">
+                {userData.usersList.length > 0 ? (
+                  <button
+                    className="btn-show-details"
+                    onClick={() => setDetailsVisible(!detailsVisible)}
+                  >
+                    {detailsVisible ? (
+                      <>
+                        <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
+                      </>
+                    )}
+                  </button>
+                ) : null}
+
                 <button
-                  className="btn-show-details"
-                  onClick={() => setDetailsVisible(!detailsVisible)}
-                >
-                  {detailsVisible ? (
-                    <>
-                      <FontAwesomeIcon icon={faArrowUp} /> Ocultar detalles
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faArrowDown} /> Mostrar detalles
-                    </>
-                  )}
-                </button>
-                <button
-                  className="ms-3 btn-delete-details"
+                  className="btn-delete-details"
                   onClick={handleDeleteUser}
                 >
                   <FontAwesomeIcon
