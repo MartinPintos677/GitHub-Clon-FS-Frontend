@@ -10,14 +10,13 @@
 
 .repos-list-bd {
   max-width: 600px;
-  /* margin: 0 auto;*/
   margin-left: 350px;
   padding: 30px;
-  /*background-color: #333;*/
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-top: 60px;
   border: 1px solid gainsboro;
+  margin-bottom: 160px;
 }
 
 .repos-list-bd h1 {
@@ -44,9 +43,7 @@
   font-size: 20px;
   color: #007bff;
   text-decoration: none;
-
   cursor: pointer;
-
   position: relative;
   display: inline-block;
   padding-bottom: 2px;
@@ -111,6 +108,7 @@
     margin-left: 0px;
     margin: 0 auto;
     margin-top: 30px;
+    margin-bottom: 60px;
     padding-right: 30px;
     padding-left: 30px;
   }

@@ -104,28 +104,35 @@ const RepositoryList: React.FC = () => {
           </div>
         </div>
 
-        <div className="repos-list-bd mb-5">
-          <h1 className="fs-3">Lista de Repositorios Buscados</h1>
-          <div className="line-h2"></div>
-          <ul className="list-repos-searched">
-            {searches.map(search => (
-              <li key={search._id}>
-                <Link
-                  to={`/user/${state.username}/reposlistbd/${search._id}`}
-                  className="repos-list-bd-a"
-                >
-                  {search.search}
-                </Link>
-                <button
-                  className="ms-4 btn-delete"
-                  onClick={() => handleDeleteSearch(search._id)}
-                >
-                  <FontAwesomeIcon icon={faTrashCan} className="" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {searches.length > 0 ? (
+          <div className="repos-list-bd">
+            <h1 className="fs-3">Lista de Repositorios Buscados</h1>
+            <div className="line-h2"></div>
+            <ul className="list-repos-searched">
+              {searches.map(search => (
+                <li key={search._id}>
+                  <Link
+                    to={`/user/${state.username}/reposlistbd/${search._id}`}
+                    className="repos-list-bd-a"
+                  >
+                    {search.search}
+                  </Link>
+                  <button
+                    className="ms-4 btn-delete"
+                    onClick={() => handleDeleteSearch(search._id)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} className="" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="repos-list-bd">
+            <h1 className="fs-3">Ninguna búsqueda encontrada</h1>
+            <div className="line-h2"></div>
+          </div>
+        )}
       </div>
     </div>
   )
