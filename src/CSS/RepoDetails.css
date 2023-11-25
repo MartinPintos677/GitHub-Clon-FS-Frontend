@@ -4,11 +4,9 @@
 }
 
 .repos-details-bd {
-  max-width: 520px;
-  /* margin: 0 auto;*/
+  max-width: 580px;
   margin-left: 350px;
-  padding: 30px;
-  /*background-color: #333;*/
+  padding: 60px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-top: 60px;
@@ -34,7 +32,6 @@
   background-color: #161b22;
   color: #9e9e9e;
   border: 1px solid #9e9e9e;
-  /*border-radius: 10px;*/
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -81,6 +78,10 @@
   color: #d32f2f;
 }
 
+.username-details {
+  margin-top: 35px;
+}
+
 /* Estilo para la sección de paginación */
 .pagination-repos-details {
   display: flex;
@@ -94,8 +95,7 @@
   background-color: #007bff;
   color: #fff;
   border: none;
-
-  padding: 10px 20px; /* Espaciado interno */
+  padding: 7px 13px; /* Espaciado interno */
   margin: 0 5px; /* Espacio entre los botones */
   border-radius: 5px;
   cursor: pointer;
@@ -132,9 +132,14 @@
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 890px) {
   .repos-details-bd-container {
     display: grid;
+  }
+
+  .repos-details-bd {
+    max-width: 520px;
+    padding: 30px;
   }
 }
 

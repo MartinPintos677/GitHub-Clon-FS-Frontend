@@ -11,7 +11,7 @@
 .repos-list-bd {
   max-width: 600px;
   margin-left: 350px;
-  padding: 30px;
+  padding: 60px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-top: 60px;
@@ -99,12 +99,19 @@
   }
 }
 
+@media (max-width: 850px) {
+  .repos-list-bd {
+    margin-left: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .repos-list-bd-container {
     display: grid;
   }
 
   .repos-list-bd {
+    padding: 30px;
     margin-left: 0px;
     margin: 0 auto;
     margin-top: 30px;
